@@ -39,8 +39,16 @@
 #include "MyOled.h"
 MyOled *ecranDels = NULL;
 
+// Données concernant le clavier
+#include <Keypad.h>
+const byte LIGNES = 4; // On dispose de 4 lignes sur notre clavier donc cette constante sera de 4
+const byte COLONNES = 4; // On dispose de 4 lignes, odnc la constante associée est de 4
+char touches[LIGNES][COLONNES] = { {'1','2','3','A'}, {'4','5','6','B' }, {'7','8','9','C'}, {'*','0','#','D'} }; // Etant donné que l'on peut personnaliser les touches du clavier, il est necessaire de définir quelle touche correspond à quel caracteres. Dans le cadre du travail, les touches du clavier donneront bel et bien les memes informations qu'affichées dessus.
+byte GPIOLignes[LIGNES] = {16, 17, 5, 18}; // Lien entre les lignes du clavier et les GPIO de notre ESP
+byte GPIOColonnes[COLONNES] = {15, 2, 0, 4}; // Lien entre les colonnes du clavier et les GPIO de notre ESP
+
 void setup() {
-  // put your setup code here, to run once:
+  Keypad clavier = Keypad( makeKeymap(touches), GPIOLignes, GPIOColonnes, LIGNES, COLONNES ); // On initialise notre clavier avec les données préalablement renseignées
 }
 
 void loop() {
