@@ -27,7 +27,17 @@
             GPIO22 : SCL
 **/
 
+// Includes généraux
 #include <Arduino.h>
+
+//Classe MyOled 
+#include <wire.h>
+#define SCREEN_WIDTH 128        // OLED display width, in pixels
+#define SCREEN_HEIGHT 64        // OLED display height, in pixels
+#define OLED_RESET 4            // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_I2C_ADDRESS 0x3C   // Adresse I2C de l'écran Oled
+#include "MyOled.h"
+MyOled *ecranDels = NULL;
 
 void setup() {
   // put your setup code here, to run once:
