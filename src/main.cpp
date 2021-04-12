@@ -47,8 +47,15 @@ char touches[LIGNES][COLONNES] = { {'1','2','3','A'}, {'4','5','6','B' }, {'7','
 byte GPIOLignes[LIGNES] = {16, 17, 5, 18}; // Lien entre les lignes du clavier et les GPIO de notre ESP
 byte GPIOColonnes[COLONNES] = {15, 2, 0, 4}; // Lien entre les colonnes du clavier et les GPIO de notre ESP
 
+// Données concernant l'anneau de DEL
+#include <Adafruit_NeoPixel.h>
+#define PIN 14 // Détermine sur quel pin l'anneau est branché
+#define NUMPIXELS 8 // Détermine combien de DEL notre anneau comporte
+#define DELAYVAL 500 // Temps en milli-secondes entre l'affichage de 2 DEL
+
 void setup() {
   Keypad clavier = Keypad( makeKeymap(touches), GPIOLignes, GPIOColonnes, LIGNES, COLONNES ); // On initialise notre clavier avec les données préalablement renseignées
+  Adafruit_NeoPixel anneau(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800); // On initialise l'anneau de DEL en envoyant en parametres le nombre de DEL sur l'anneau, le pin utilisé
 }
 
 void loop() {
