@@ -1,0 +1,31 @@
+#include "Ecran.h"
+
+Ecran *ecranDel = NULL;
+int compteurTest = 0;
+
+void setup() {
+    Serial.begin(9600);
+    delay(100);
+
+    ecranDel = new Ecran();
+    ecranDel->lancement();
+}
+
+void loop() {
+    compteurTest = 0;
+
+    while(compteurTest <= 4){
+        ecranDel->InitialiserAffichage(10);
+        ecranDel->AfficherSaisie(compteurTest);
+        
+        delay(1000);
+        
+        compteurTest = compteurTest+1;
+    }
+
+    delay(3000);
+    
+    ecranDel->AfficherDeverrouillage(true);
+
+    delay(3000);
+}
