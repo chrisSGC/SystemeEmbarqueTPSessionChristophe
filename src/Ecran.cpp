@@ -8,7 +8,7 @@
 #include "Ecran.h"
 
 /**
- * Methode qui met la configuration de l'écran en place
+ * Méthode qui met la configuration de l'écran en place
  * 
  * @param addrI2C Adresse I2C de l'écran DEL
  * @return 1 en cas d'erreur | 0 si tout va bien
@@ -22,11 +22,10 @@ int Ecran::lancement(uint8_t addrI2C) {
     }else{
         return(1); // Il y a une erreur
     }
-
 }
 
 /**
- * Methode qui permet d'effacer le contenu affiché à l'écran
+ * Méthode qui permet d'effacer le contenu affiché à l'écran
  * 
  * @return void
  **/ 
@@ -35,7 +34,7 @@ void Ecran::EffacerEcran(){
 }
 
 /**
- * 
+ * Méthode qui initialise l'affichage de l'écran
  * 
  * @param hauteur int qui determine la hauteur à laquelle se trouve la ligne
  * @return void
@@ -48,7 +47,7 @@ void Ecran::InitialiserAffichage(int hauteur){
 }
 
 /**
- * 
+ * Méthode qui permet d'afficher le nombre d'étoiles correspondant au nombre de caracteres saisis
  * 
  * @param nbrCharSaisis nombre de caractères saisis par l'utilisateur afin d'afficher le bon nombe d'étoiles
  * @return void 
@@ -67,6 +66,12 @@ void Ecran::AfficherSaisie(byte nbrCharSaisis){
     afficheur.display();
 }
 
+/**
+ * Méthode qui permet d'afficher sur l'écran si la porte est dévérouillée ou non
+ * 
+ * @param ouverture true si la dévérouillage est un succes, false si ce n'est pas le cas
+ * @return void 
+ **/
 void Ecran::AfficherDeverrouillage(bool ouverture){
     InitialiserAffichage(15);
 
