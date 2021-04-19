@@ -46,8 +46,20 @@
 #include <Anneau.h>
 #include <Ecran.h>
 
+// Objets personnalisés
+Ecran *ecranDel = NULL;
+Anneau *anneauDel = NULL;
+Clavier *clavier = NULL;
+Code *code = NULL;
+
 void setup() {
-	// setup
+    code = new Code(); // Initialisation de l'objet Code pour gérer le code PIN
+    clavier = new Clavier(); // Initialisation de l'objet Clavier
+    anneauDel = new Anneau(); // Initialisation de l'objet Anneau
+    ecranDel = new Ecran(); // Initialisation de l'objet Ecran
+
+    anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
+    ecranDel->lancement(); // Appel de la methode lancement qui permet d'initialiser l'affichage sur l'écran
 }
 
 void loop() {
