@@ -40,6 +40,10 @@
 // Includes généraux
 #include <Arduino.h>
 
+// Includes classes personnelles
+#include <Clavier.h>
+#include <Code.h>
+
 void setup() {
 	// setup
 }
