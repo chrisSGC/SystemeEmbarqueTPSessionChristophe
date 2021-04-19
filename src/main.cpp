@@ -77,4 +77,6 @@ void loop() {
 
     // On affiche la ligne de l'écran
     ecranDel->AfficherSaisie(nombreCaracteres);
+
+    char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
 }
