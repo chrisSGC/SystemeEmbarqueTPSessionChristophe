@@ -50,6 +50,7 @@
 Ecran *ecranDel = NULL;
 Anneau *anneauDel = NULL;
 Clavier *clavier = NULL;
+Code code;
 
 void setup() {
 	// setup
