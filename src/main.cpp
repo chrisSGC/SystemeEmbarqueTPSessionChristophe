@@ -44,6 +44,7 @@
 #include <Clavier.h>
 #include <Code.h>
 #include <Anneau.h>
+#include <Ecran.h>
 
 void setup() {
 	// setup
