@@ -43,6 +43,7 @@
 // Includes classes personnelles
 #include <Clavier.h>
 #include <Code.h>
+#include <Anneau.h>
 
 void setup() {
 	// setup
