@@ -49,6 +49,7 @@
 // Objets personnalisés
 Ecran *ecranDel = NULL;
 Anneau *anneauDel = NULL;
+Clavier *clavier = NULL;
 
 void setup() {
 	// setup
