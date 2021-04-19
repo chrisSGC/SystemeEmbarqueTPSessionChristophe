@@ -20,7 +20,7 @@ int Code::EntrerCaractere(char nouveauCaractere){
     if('*' == nouveauCaractere){
         // il s'agit d'une validation de code, on lance donc la reconnaissance
         return VerifierCode();
-    }else if(('#' == nouveauCaractere) && (4 == chaineSaisie.size())){
+    }else if(('*' == nouveauCaractere) && (4 == chaineSaisie.size())){
         //Si 4 caracteres plus le # = changement de code
         ModifierCode();
         return 3; // code 3 veut dire que le code a été modifié
