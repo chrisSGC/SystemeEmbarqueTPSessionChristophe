@@ -79,4 +79,9 @@ void loop() {
     ecranDel->AfficherSaisie(nombreCaracteres);
 
     char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
+
+    // Partie non prévue au programme mais necessaire pour vérifier que le tout fonctionne
+    if(toucheSaisie != NO_KEY){
+        int leCode = code->EntrerCaractere(toucheSaisie);
+    }
 }
