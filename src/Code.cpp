@@ -17,7 +17,7 @@ Code::Code(){
  * Permet de réinitialiser la chiane saisie afin que l'utilisateur puisse reprendre à 0
  **/
 int Code::EntrerCaractere(char nouveauCaractere){
-    if('*' == nouveauCaractere){
+    if('#' == nouveauCaractere){
         // il s'agit d'une validation de code, on lance donc la reconnaissance
         return VerifierCode();
     }else if(('*' == nouveauCaractere) && (4 == chaineSaisie.size())){
