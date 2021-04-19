@@ -82,6 +82,6 @@ void loop() {
 
     // Partie non prévue au programme mais necessaire pour vérifier que le tout fonctionne
     if(toucheSaisie != NO_KEY){
-        int leCode = code->EntrerCaractere(toucheSaisie);
+        int leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
     }
 }
