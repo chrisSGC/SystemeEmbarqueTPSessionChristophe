@@ -17,7 +17,7 @@ class Ecran{
         void AfficherDeverrouillage(bool ouverture = false);
 
         //Pour les fonctionnalités de veille
-        void MettreEnVeille();
+        void EffacerEcran();
         
     private:  
         String enTete = "Saisissez votre code";

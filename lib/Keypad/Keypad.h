@@ -75,6 +75,7 @@ typedef struct {
 class Keypad : public Key {
 public:
 
+	Keypad();
 	Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols);
 
 	virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
