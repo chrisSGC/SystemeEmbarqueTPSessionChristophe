@@ -46,6 +46,9 @@
 #include <Anneau.h>
 #include <Ecran.h>
 
+// Objets personnalisés
+Ecran *ecranDel = NULL;
+
 void setup() {
 	// setup
 }
