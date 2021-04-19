@@ -53,7 +53,8 @@ Clavier *clavier = NULL;
 Code *code = NULL;
 
 void setup() {
-	// setup
+  code = new Code();
+  clavier = new Clavier();
 }
 
 void loop() {
