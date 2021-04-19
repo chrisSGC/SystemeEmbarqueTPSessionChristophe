@@ -52,6 +52,9 @@ Anneau *anneauDel = NULL;
 Clavier *clavier = NULL;
 Code *code = NULL;
 
+// Variables necesaires au programme
+int nombreCaracteres; // Permet de stocker le nombre de caracteres saisies
+
 void setup() {
     code = new Code(); // Initialisation de l'objet Code pour gérer le code PIN
     clavier = new Clavier(); // Initialisation de l'objet Clavier
@@ -60,8 +63,18 @@ void setup() {
 
     anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
     ecranDel->lancement(); // Appel de la methode lancement qui permet d'initialiser l'affichage sur l'écran
+
+    // On initialise le nombre de caracteres à 0
+    nombreCaracteres = 0;
 }
 
 void loop() {
-	// main program
+	// On va etteindre l'anneau Del
+    anneauDel->EteindreDel();
+
+    // On efface completement l'écran
+    ecranDel->EffacerEcran();
+
+    // On affiche la ligne de l'écran
+    ecranDel->AfficherSaisie(nombreCaracteres);
 }
