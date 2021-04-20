@@ -47,12 +47,28 @@ void Ecran::InitialiserAffichage(int hauteur){
 }
 
 /**
+ * Méthode qui affiche le message de modification du code secret
+ * 
+ * @return void
+ **/ 
+void Ecran::AfficherModification(){
+    EffacerEcran();
+    InitialiserAffichage(10);
+    
+    afficheur.println("CODE MODIFIE!");
+    afficheur.println("REDEMARRAGE SYSTEME");
+    afficheur.display();
+}
+
+/**
  * Méthode qui permet d'afficher le nombre d'étoiles correspondant au nombre de caracteres saisis
  * 
  * @param nbrCharSaisis nombre de caractères saisis par l'utilisateur afin d'afficher le bon nombe d'étoiles
  * @return void 
  **/
 void Ecran::AfficherSaisie(byte nbrCharSaisis){
+    EffacerEcran();
+    InitialiserAffichage(10);
     byte nbrLocal = 0;
     String affichageCode = "";
 
@@ -73,12 +89,13 @@ void Ecran::AfficherSaisie(byte nbrCharSaisis){
  * @return void 
  **/
 void Ecran::AfficherDeverrouillage(bool ouverture){
+    EffacerEcran();
     InitialiserAffichage(15);
 
     if(ouverture == true){
-        afficheur.print("OUVERTURE");
+        afficheur.println("OUVERTURE");
     }else{
-        afficheur.print("ACCES REFUSE");
+        afficheur.println("ACCES REFUSE");
     }
 
     afficheur.display();

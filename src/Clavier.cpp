@@ -6,5 +6,6 @@ Clavier::Clavier(){
 }
 
 char Clavier::RecupererToucheTapee(){
+    //return clavier.waitForKey();
     return clavier.getKey();
 }

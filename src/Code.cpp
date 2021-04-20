@@ -26,6 +26,7 @@ int Code::EntrerCaractere(char nouveauCaractere){
         return 3; // code 3 veut dire que le code a été modifié
     }else{
         chaineSaisie = chaineSaisie + nouveauCaractere;
+        nombreCaracteres++;
         return 2; // code 2 veut dire que le caractere a été ajouté
     }
 
@@ -36,6 +37,7 @@ int Code::EntrerCaractere(char nouveauCaractere){
  **/
 void Code::ReinitialiserSaisie(){
     chaineSaisie = "";
+    nombreCaracteres = 0;
 }
 
 /**

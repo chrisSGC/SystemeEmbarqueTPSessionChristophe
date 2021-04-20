@@ -9,7 +9,6 @@
       Versions  Date          Auteur      Description
       0.1       12 Avril 21   Chris       Mise en place des fichiers de base
 	  0.2		19 Avril 21   Chris		  Reinitialisation du fichier main
-      0.3       20 Avril 21   Chris       Mise en place de l'algorythme principal
                             
     platform                      : espressif32
     board                         : esp32doit-devkit-v1
@@ -54,7 +53,7 @@ Clavier *clavier = NULL;
 Code *code = NULL;
 
 // Variables necesaires au programme
-int leCode;
+//int nombreCaracteres; // Permet de stocker le nombre de caracteres saisies
 
 void setup() {
     code = new Code(); // Initialisation de l'objet Code pour gérer le code PIN
@@ -63,47 +62,66 @@ void setup() {
     ecranDel = new Ecran(); // Initialisation de l'objet Ecran
 
     Serial.begin(9600);
-    leCode = 4;
 
     //anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
     ecranDel->lancement(); // Appel de la methode lancement qui permet d'initialiser l'affichage sur l'écran
+
+    // On initialise le nombre de caracteres à 0
+    //nombreCaracteres = 0;
 }
 
 void loop() {
-    ecranDel->EffacerEcran();
+	// On va etteindre l'anneau Del
+    //anneauDel->EteindreDel();
+    //Serial.println("Start");
+
+    // On efface completement l'écran
+    //ecranDel->EffacerEcran();
+    //Serial.println("Ecran");
+
+    // On affiche la ligne de l'écran
+    //ecranDel->InitialiserAffichage(10);
+    //ecranDel->AfficherSaisie(nombreCaracteres);
+    //Serial.println("Sasie");
 
     char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
+    //Serial.println("Touche");
+    //Serial.println(toucheSaisie);
 
     // Partie non prévue au programme mais necessaire pour vérifier que le tout fonctionne
     if(toucheSaisie != NO_KEY){
+        ecranDel->EffacerEcran();
+        Serial.println("Ecran");
+
         // On affiche la ligne de l'écran
-        leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
+        ecranDel->InitialiserAffichage(10);
+        ecranDel->AfficherSaisie(code->nombreCaracteres);
+        Serial.println("Sasie");
+
+        int leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
         Serial.println(toucheSaisie);
         //anneauDel->FaireTournerAnneau();
+
+        if(1 == leCode){
+            // le code est bon, leds vertes
+            ecranDel->AfficherDeverrouillage(true);
+            //anneauDel->TraiterRegistre(0b11111111, 0, 25, 0);
+            Serial.println("Bon");
+        }else if(0 == leCode){
+            // code erroné, leds rouges
+            ecranDel->AfficherDeverrouillage(false);
+            //anneauDel->TraiterRegistre(0b11111111, 25, 0, 0);
+            Serial.println("Mauvais");
+        }else if(3 == leCode){
+            // Code modifié, leds violettes
+            //anneauDel->TraiterRegistre(0b11111111, 102, 0, 153);
+            Serial.println("Update");
+        }else if(2 == leCode){
+            //nombreCaracteres++;
+            ecranDel->AfficherSaisie(code->nombreCaracteres);
+            Serial.println("add");
+        }
     }
 
-    if(1 == leCode){
-        // le code est bon, leds vertes
-        ecranDel->AfficherDeverrouillage(true);
-        //anneauDel->TraiterRegistre(0b11111111, 0, 25, 0);
-    }else if(0 == leCode){
-        // code erroné, leds rouges
-        ecranDel->AfficherDeverrouillage(false);
-        //anneauDel->TraiterRegistre(0b11111111, 25, 0, 0);
-    }else if(3 == leCode){
-        // Code modifié, leds violettes
-        ecranDel->AfficherModification();
-        //anneauDel->TraiterRegistre(0b11111111, 102, 0, 153);
-    }else if(2 == leCode){
-        //nombreCaracteres++;
-        ecranDel->AfficherSaisie(code->nombreCaracteres);
-    }else{
-        ecranDel->AfficherSaisie(code->nombreCaracteres);
-    }
-
-    if((2 != leCode) && (4 != leCode)){
-        code->ReinitialiserSaisie();
-        delay(4000);
-        leCode = 4;
-    }
+    //delay(4000);
 }

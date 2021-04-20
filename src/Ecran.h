@@ -15,6 +15,7 @@ class Ecran{
         void InitialiserAffichage(int hauteur);
         void AfficherSaisie(byte nombreCaracteres = 0);
         void AfficherDeverrouillage(bool ouverture = false);
+        void AfficherModification();
 
         //Pour les fonctionnalités de veille
         void EffacerEcran();
