@@ -46,6 +46,11 @@ void Ecran::InitialiserAffichage(int hauteur){
     afficheur.setCursor(0, hauteur);
 }
 
+/**
+ * Méthode qui affiche le message de modification du code secret
+ * 
+ * @return void
+ **/ 
 void Ecran::AfficherModification(){
     EffacerEcran();
     InitialiserAffichage(10);
