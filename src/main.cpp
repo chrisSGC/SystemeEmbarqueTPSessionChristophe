@@ -9,6 +9,7 @@
       Versions  Date          Auteur      Description
       0.1       12 Avril 21   Chris       Mise en place des fichiers de base
 	  0.2		19 Avril 21   Chris		  Reinitialisation du fichier main
+      0.3       20 Avril 21   Chris       Mise en place de l'algorythme principal
                             
     platform                      : espressif32
     board                         : esp32doit-devkit-v1
@@ -83,25 +84,15 @@ void loop() {
 
     if(1 == leCode){
         // le code est bon, leds vertes
-        ecranDel->EffacerEcran();
         ecranDel->AfficherDeverrouillage(true);
-        code->ReinitialiserSaisie();
-        delay(4000);
-        leCode = 4;
         //anneauDel->TraiterRegistre(0b11111111, 0, 25, 0);
     }else if(0 == leCode){
         // code erroné, leds rouges
         ecranDel->AfficherDeverrouillage(false);
-        code->ReinitialiserSaisie();
-        delay(4000);
-        leCode = 4;
         //anneauDel->TraiterRegistre(0b11111111, 25, 0, 0);
     }else if(3 == leCode){
         // Code modifié, leds violettes
         ecranDel->AfficherModification();
-        code->ReinitialiserSaisie();
-        delay(4000);
-        leCode = 4;
         //anneauDel->TraiterRegistre(0b11111111, 102, 0, 153);
     }else if(2 == leCode){
         //nombreCaracteres++;
@@ -110,5 +101,9 @@ void loop() {
         ecranDel->AfficherSaisie(code->nombreCaracteres);
     }
 
-    //delay(4000);
+    if((2 != leCode) && (4 != leCode)){
+        code->ReinitialiserSaisie();
+        delay(4000);
+        leCode = 4;
+    }
 }

@@ -67,8 +67,8 @@ void Ecran::AfficherModification(){
  * @return void 
  **/
 void Ecran::AfficherSaisie(byte nbrCharSaisis){
-    InitialiserAffichage(10);
     EffacerEcran();
+    InitialiserAffichage(10);
     byte nbrLocal = 0;
     String affichageCode = "";
 
