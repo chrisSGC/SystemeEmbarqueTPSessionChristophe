@@ -3,6 +3,7 @@ using namespace std;
 
 class Code{
     public:
+        int nombreCaracteres;
         Code();
         bool VerifierCode();
         int EntrerCaractere(char nouveauCaractere);

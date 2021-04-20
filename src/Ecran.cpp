@@ -46,6 +46,15 @@ void Ecran::InitialiserAffichage(int hauteur){
     afficheur.setCursor(0, hauteur);
 }
 
+void Ecran::AfficherModification(){
+    EffacerEcran();
+    InitialiserAffichage(10);
+    
+    afficheur.println("CODE MODIFIE!");
+    afficheur.println("REDEMARRAGE SYSTEME");
+    afficheur.display();
+}
+
 /**
  * Méthode qui permet d'afficher le nombre d'étoiles correspondant au nombre de caracteres saisis
  * 
@@ -53,6 +62,8 @@ void Ecran::InitialiserAffichage(int hauteur){
  * @return void 
  **/
 void Ecran::AfficherSaisie(byte nbrCharSaisis){
+    InitialiserAffichage(10);
+    EffacerEcran();
     byte nbrLocal = 0;
     String affichageCode = "";
 
@@ -73,12 +84,13 @@ void Ecran::AfficherSaisie(byte nbrCharSaisis){
  * @return void 
  **/
 void Ecran::AfficherDeverrouillage(bool ouverture){
+    EffacerEcran();
     InitialiserAffichage(15);
 
     if(ouverture == true){
-        afficheur.print("OUVERTURE");
+        afficheur.println("OUVERTURE");
     }else{
-        afficheur.print("ACCES REFUSE");
+        afficheur.println("ACCES REFUSE");
     }
 
     afficheur.display();

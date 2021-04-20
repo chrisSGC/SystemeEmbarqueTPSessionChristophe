@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <Anneau.h>
 ///// A SUPPRIMER: METHODE POUR RETOURNER LE REGISTRE
 
@@ -34,7 +33,9 @@ void Anneau::EteindreDel(){
  * Méthode qui permet d'allumer des Del pour lesquelles une couleur a été définie
  * */
 void Anneau::AllumerDel(){
+    Serial.print("show de tes morts");
     pixels.show(); // Envoi la couleur définie à l'anneau
+    Serial.print("fuck off");
 }
 
 /**
@@ -104,7 +105,9 @@ void Anneau::FaireTournerAnneau(){
     pixels.setPixelColor(i, pixels.Color(0, 0, 25));
 
     AllumerDel();
+    Serial.print("vas chier");
     delay(delais);
+    Serial.print("delay de mort");
     EteindreDel();
   }
 }
