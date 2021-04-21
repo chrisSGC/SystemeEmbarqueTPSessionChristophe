@@ -1,10 +1,15 @@
 #include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
+
+#define PIN 14
 
 class Anneau{
     public:
-        Adafruit_NeoPixel pixels = Adafruit_NeoPixel(nbrPixels, pin, NEO_GRB + NEO_KHZ800);
+        Adafruit_NeoPixel pixels = Adafruit_NeoPixel(nbrPixels, PIN, NEO_GRB + NEO_KHZ800);
 
-        Anneau(){}
+        Anneau(){} ;
         void Initialiser();
         void EteindreDel();
         void AllumerDel();
@@ -16,7 +21,6 @@ class Anneau{
 
     private:
         int nbrPixels = 8; // NeoPixel ring size
-        int delais = 100; // Time (in milliseconds) to pause between pixels
-        int pin = 14; // Which pin on the Arduino is connected to the NeoPixels?
+        int delais = 5; // Time (in milliseconds) to pause between pixels
         int registre = 0xff; // abcd efgh a: premier Del, b: second del, c: troisieme del, d: quatrieme del, e: cinquième del, f: sixième Del, g: septième Del, h: huitième Del 
 };

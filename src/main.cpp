@@ -44,12 +44,12 @@
 // Includes classes personnelles
 #include <Clavier.h>
 #include <Code.h>
-//#include <Anneau.h>
+#include <Anneau.h>
 #include <Ecran.h>
 
 // Objets personnalisés
 Ecran *ecranDel = NULL;
-//Anneau *anneauDel = NULL;
+Anneau *anneauDel = NULL;
 Clavier *clavier = NULL;
 Code *code = NULL;
 
@@ -59,18 +59,19 @@ int leCode;
 void setup() {
     code = new Code(); // Initialisation de l'objet Code pour gérer le code PIN
     clavier = new Clavier(); // Initialisation de l'objet Clavier
-    //anneauDel = new Anneau(); // Initialisation de l'objet Anneau
+    anneauDel = new Anneau(); // Initialisation de l'objet Anneau
     ecranDel = new Ecran(); // Initialisation de l'objet Ecran
 
     Serial.begin(9600);
     leCode = 4;
 
-    //anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
+    anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
     ecranDel->lancement(); // Appel de la methode lancement qui permet d'initialiser l'affichage sur l'écran
 }
 
 void loop() {
     ecranDel->EffacerEcran();
+    anneauDel->ReinitialiserRegistre();
 
     char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
 
@@ -79,25 +80,27 @@ void loop() {
         // On affiche la ligne de l'écran
         leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
         Serial.println(toucheSaisie);
-        //anneauDel->FaireTournerAnneau();
+        anneauDel->FaireTournerAnneau();
     }
 
     if(1 == leCode){
+        anneauDel->TraiterRegistre(0b11111111, 0, 25, 0);
         // le code est bon, leds vertes
         ecranDel->AfficherDeverrouillage(true);
-        //anneauDel->TraiterRegistre(0b11111111, 0, 25, 0);
     }else if(0 == leCode){
+        anneauDel->TraiterRegistre(0b11111111, 25, 0, 0);
         // code erroné, leds rouges
         ecranDel->AfficherDeverrouillage(false);
-        //anneauDel->TraiterRegistre(0b11111111, 25, 0, 0);
     }else if(3 == leCode){
+        anneauDel->TraiterRegistre(0b11111111, 102, 0, 153);
         // Code modifié, leds violettes
         ecranDel->AfficherModification();
-        //anneauDel->TraiterRegistre(0b11111111, 102, 0, 153);
     }else if(2 == leCode){
-        //nombreCaracteres++;
         ecranDel->AfficherSaisie(code->nombreCaracteres);
+        anneauDel->TraiterRegistre(0b11000000, 25, 25 ,0);
     }else{
+        anneauDel->EteindreDel();
+        anneauDel->AllumerDel();
         ecranDel->AfficherSaisie(code->nombreCaracteres);
     }
 
