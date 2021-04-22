@@ -3,61 +3,112 @@
     Expérimentations sur l'utilisation des classes et d'un écran Oled (avec un bouton) sur un ESP32
     @file main.cpp
     @author Christophe Ferru
-    @version 0.1 12 Avril 2021
+    @version 0.4 21 Avril 2021
     
-    Historique des versions:
+    Historique des versions       :
       Versions  Date          Auteur      Description
       0.1       12 Avril 21   Chris       Mise en place des fichiers de base
+	  0.2		19 Avril 21   Chris		  Reinitialisation du fichier main
+      0.3       20 Avril 21   Chris       Mise en place de l'algorythme principal
+      0.4       21 Avril 21   Chris       Mise en place de l'anneau de Dels
                             
-    platform: espressif32
-    board: esp32doit-devkit-v1
-    framework: arduino
-    lib_deps:
-      adafruit/Adafruit GFX Library @ ^1.10.1     (Pour la classe MyOled)
-      adafruit/Adafruit SSD1306 @ ^2.4.0          (Pour la classe MyOled)
-      adafruit/Adafruit NeoPixel @ ^1.7.0         (Pour la classe MyOled)
-
+    platform                      : espressif32
+    board                         : esp32doit-devkit-v1
+    framework                     : arduino
+    lib_deps                      : 
+		- Aucun
     Autres librairies (à copier dans le répertoire lib)
-      Aucune
-    Classes du système:
-        MyOled      V1.0    Pour interfacer le Oled
-            Résolution 128 x 64
-            Protocole I2C, Adresse : 0x3C 
-            GPIO21 : SDA
-            GPIO22 : SCL
+		- Adafruit_GFX
+		- Adafruit_GrayOLED
+		- Adafruit_NeoPixel
+		- Adafruit_SSD1306
+		- Key
+		- Keypad
+    Classes du système            :
+		Anneau		v1.0	Interface l'anneau Del
+			8 Del
+			GPIO14
+		Clavier		v1.0	Interface le clavier
+			GPIO0, 2, 4, 5, 15, 16,17 et 18
+		Ecran		v1.0	Interface l'écran Del
+			Résolution 128 x 64
+            Protocole I2C, Adresse: 0x3C 
+            GPIO21                : SDA
+            GPIO22                : SCL
+		Code		v1.0	Gestion du code PIN
+			Controle et modification du code
 **/
 
 // Includes généraux
 #include <Arduino.h>
 
-//Classe MyOled 
-#include <wire.h>
-#define SCREEN_WIDTH 128        // OLED display width, in pixels
-#define SCREEN_HEIGHT 64        // OLED display height, in pixels
-#define OLED_RESET 4            // Reset pin # (or -1 if sharing Arduino reset pin)
-#define OLED_I2C_ADDRESS 0x3C   // Adresse I2C de l'écran Oled
-#include "MyOled.h"
-MyOled *ecranDels = NULL;
+// Includes classes personnelles
+#include <Clavier.h>
+#include <Code.h>
+#include <Anneau.h>
+#include <Ecran.h>
 
-// Données concernant le clavier
-#include <Keypad.h>
-const byte LIGNES = 4; // On dispose de 4 lignes sur notre clavier donc cette constante sera de 4
-const byte COLONNES = 4; // On dispose de 4 lignes, odnc la constante associée est de 4
-char touches[LIGNES][COLONNES] = { {'1','2','3','A'}, {'4','5','6','B' }, {'7','8','9','C'}, {'*','0','#','D'} }; // Etant donné que l'on peut personnaliser les touches du clavier, il est necessaire de définir quelle touche correspond à quel caracteres. Dans le cadre du travail, les touches du clavier donneront bel et bien les memes informations qu'affichées dessus.
-byte GPIOLignes[LIGNES] = {16, 17, 5, 18}; // Lien entre les lignes du clavier et les GPIO de notre ESP
-byte GPIOColonnes[COLONNES] = {15, 2, 0, 4}; // Lien entre les colonnes du clavier et les GPIO de notre ESP
+// Objets personnalisés
+Ecran *ecranDel = NULL;
+Anneau *anneauDel = NULL;
+Clavier *clavier = NULL;
+Code *code = NULL;
 
-// Données concernant l'anneau de DEL
-#include <Adafruit_NeoPixel.h>
-#define PIN 14 // Détermine sur quel pin l'anneau est branché
-#define NUMPIXELS 8 // Détermine combien de DEL notre anneau comporte
-#define DELAYVAL 500 // Temps en milli-secondes entre l'affichage de 2 DEL
+// Variables necesaires au programme
+int leCode;
 
 void setup() {
-  Keypad clavier = Keypad( makeKeymap(touches), GPIOLignes, GPIOColonnes, LIGNES, COLONNES ); // On initialise notre clavier avec les données préalablement renseignées
-  Adafruit_NeoPixel anneau(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800); // On initialise l'anneau de DEL en envoyant en parametres le nombre de DEL sur l'anneau, le pin utilisé
+    code = new Code(); // Initialisation de l'objet Code pour gérer le code PIN
+    clavier = new Clavier(); // Initialisation de l'objet Clavier
+    anneauDel = new Anneau(); // Initialisation de l'objet Anneau
+    ecranDel = new Ecran(); // Initialisation de l'objet Ecran
+
+    Serial.begin(9600);
+    leCode = 4;
+
+    anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
+    ecranDel->lancement(); // Appel de la methode lancement qui permet d'initialiser l'affichage sur l'écran
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+    ecranDel->EffacerEcran();
+    anneauDel->ReinitialiserRegistre();
+
+    char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
+
+    // Partie non prévue au programme mais necessaire pour vérifier que le tout fonctionne
+    if(toucheSaisie != NO_KEY){
+        // On affiche la ligne de l'écran
+        leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
+        Serial.println(toucheSaisie);
+        anneauDel->FaireTournerAnneau();
+    }
+
+    if(1 == leCode){
+        anneauDel->AllumerDelRegistre(0b11111111, 0, 25, 0);
+        // le code est bon, leds vertes
+        ecranDel->AfficherDeverrouillage(true);
+    }else if(0 == leCode){
+        anneauDel->AllumerDelRegistre(0b11111111, 25, 0, 0);
+        // code erroné, leds rouges
+        ecranDel->AfficherDeverrouillage(false);
+    }else if(3 == leCode){
+        anneauDel->AllumerDelRegistre(0b11111111, 25, 0, 13);
+        // Code modifié, leds violettes
+        ecranDel->AfficherModification();
+    }else if(2 == leCode){
+        ecranDel->AfficherSaisie(code->nombreCaracteres);
+        anneauDel->AllumerDelSaisie(code->nombreCaracteres);
+    }else{
+        // Cas par défaut, on eteind des Del et on affiche le cas par defaut
+        anneauDel->EteindreDel();
+        anneauDel->AllumerDel();
+        ecranDel->AfficherSaisie(code->nombreCaracteres);
+    }
+
+    if((2 != leCode) && (4 != leCode)){
+        code->ReinitialiserSaisie(); // On réinitialise la saisie
+        delay(4000);
+        leCode = 4; // On réinitialise le code de déajout des commentairespart à 4
+    }
 }

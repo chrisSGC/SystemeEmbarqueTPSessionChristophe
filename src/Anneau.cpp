@@ -1,6 +1,10 @@
-#include <Arduino.h>
+/**
+    Classe qui permet de gérer l'anneau DEL du projet
+    @file ecran.cpp
+    @author Christophe Ferru
+    @version 1.0 - 14 Avril 2021                           
+**/
 #include <Anneau.h>
-///// A SUPPRIMER: METHODE POUR RETOURNER LE REGISTRE
 
 /**
  * Méthode qui permet:
@@ -40,10 +44,20 @@ void Anneau::AllumerDel(){
 /**
  * On défini la couleur de toutes les Del sur "off"
  * */
-void Anneau::TraiterRegistre(int delAAllumer, int rouge, int vert, int bleu){
+void Anneau::TraiterRegistre(int delAAllumer){
     registre = registre | delAAllumer;
     
-    AllumerDelRegistre(rouge, vert, bleu);
+}
+
+/**
+ * Permet d'allumer les dels jaunes en fonction du nombre de caracteres passé en parametre
+ * 
+ * */
+void Anneau::AllumerDelSaisie(int nombreCaracteres){
+    if(nombreCaracteres == 1){ AllumerDelRegistre(0b11000000, 25, 25, 0); }
+    else if(nombreCaracteres == 2){ AllumerDelRegistre(0b11110000, 25, 25, 0); }
+    else if(nombreCaracteres == 3){ AllumerDelRegistre(0b11111100, 25, 25, 0); }
+    else if(nombreCaracteres == 4){ AllumerDelRegistre(0b11111111, 25, 25, 0); }
 }
 
 /**
@@ -52,35 +66,23 @@ void Anneau::TraiterRegistre(int delAAllumer, int rouge, int vert, int bleu){
  * On a découpé en 4 blocs nos Dels afin de signifier visuellement à l'utilisateur le nombre de chiffres entrés dans son code
  * 
  * La procédure est simple:
- * Chaque condition correspond à un bloc.
- * On vérifie donc le registre pour chacun des blocs. Si il y a concordance, on pose la couleur sur jaune.
+ * Chaque condition correspond à une Del.
+ * On vérifie donc le registre pour chacune des Del. Si il y a concordance, on pose la couleur sur jaune.
  * 
  * Enfin, on allume les Del qui doivent l'être
  * */
-void Anneau::AllumerDelRegistre(int rouge, int vert, int bleu){
-    // Permet de définir la couleur du premier bloc de 2 Del
-    if( 0 != (registre & 0b11000000)){
-        pixels.setPixelColor(7, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(6, pixels.Color(rouge, vert, bleu));
-    }
+void Anneau::AllumerDelRegistre(int delAAllumer,int rouge, int vert, int bleu){
+    TraiterRegistre(delAAllumer);
+    EteindreDel();
 
-    // Permet de définir la couleur du second bloc de 2 Del
-    if( 0 != (registre & 0b00110000)){
-        pixels.setPixelColor(5, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(4, pixels.Color(rouge, vert, bleu));
-    }
-    
-    // Permet de définir la couleur du troisième bloc de 2 Del
-    if( 0 != (registre & 0b00001100)){
-        pixels.setPixelColor(3, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(2, pixels.Color(rouge, vert, bleu));
-    }
-
-    // Permet de définir la couleur du dernier bloc de 2 Del
-    if( 0 != (registre & 0b00000011)){
-        pixels.setPixelColor(1, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(0, pixels.Color(rouge, vert, bleu));
-    }
+    if( 0 != (registre & 0b10000000)){ pixels.setPixelColor(7, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b01000000)){ pixels.setPixelColor(6, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00100000)){ pixels.setPixelColor(5, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00010000)){ pixels.setPixelColor(4, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00001000)){ pixels.setPixelColor(3, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00000100)){ pixels.setPixelColor(2, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00000010)){ pixels.setPixelColor(1, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00000001)){ pixels.setPixelColor(0, pixels.Color(rouge, vert, bleu)); }
 
     AllumerDel(); // On allume les Del pour lesquelles une couleur est définie
 }
@@ -104,7 +106,8 @@ void Anneau::FaireTournerAnneau(){
     pixels.setPixelColor(i, pixels.Color(0, 0, 25));
 
     AllumerDel();
-    delay(delais);
+    delay(1);
     EteindreDel();
   }
+    EteindreDel();
 }
