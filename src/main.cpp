@@ -85,29 +85,30 @@ void loop() {
     }
 
     if(1 == leCode){
-        anneauDel->TraiterRegistre(0b11111111, 0, 25, 0);
+        anneauDel->AllumerDelRegistre(0b11111111, 0, 25, 0);
         // le code est bon, leds vertes
         ecranDel->AfficherDeverrouillage(true);
     }else if(0 == leCode){
-        anneauDel->TraiterRegistre(0b11111111, 25, 0, 0);
+        anneauDel->AllumerDelRegistre(0b11111111, 25, 0, 0);
         // code erroné, leds rouges
         ecranDel->AfficherDeverrouillage(false);
     }else if(3 == leCode){
-        anneauDel->TraiterRegistre(0b11111111, 102, 0, 153);
+        anneauDel->AllumerDelRegistre(0b11111111, 25, 0, 13);
         // Code modifié, leds violettes
         ecranDel->AfficherModification();
     }else if(2 == leCode){
         ecranDel->AfficherSaisie(code->nombreCaracteres);
-        anneauDel->TraiterRegistre(0b11000000, 25, 25 ,0);
+        anneauDel->AllumerDelSaisie(code->nombreCaracteres);
     }else{
+        // Cas par défaut, on eteind des Del et on affiche le cas par defaut
         anneauDel->EteindreDel();
         anneauDel->AllumerDel();
         ecranDel->AfficherSaisie(code->nombreCaracteres);
     }
 
     if((2 != leCode) && (4 != leCode)){
-        code->ReinitialiserSaisie();
+        code->ReinitialiserSaisie(); // On réinitialise la saisie
         delay(4000);
-        leCode = 4;
+        leCode = 4; // On réinitialise le code de déajout des commentairespart à 4
     }
 }

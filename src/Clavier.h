@@ -1,3 +1,21 @@
+/**
+    Classe Clavier qui gere le clavier en se basant sur les methodes de la librairie Keypad déclarée en tant que propriété
+    @file Clavier.h
+    @author Christophe Ferru
+    @version 1.0 17/03/21  
+    
+    Historique des versions   
+        Versions  Date          Auteur      Description
+        1.0       22 Avril 21   Chris       Première version de la classe
+                            
+    platform = espressif32
+    board = esp32doit-devkit-v1
+    framework = arduino
+    lib_deps = Aucune
+    Autres librairies
+        Keypad
+**/
+
 #ifndef CLAVIER_H
 #define CLAVIER_H
 
