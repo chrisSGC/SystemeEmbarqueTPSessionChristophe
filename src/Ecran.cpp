@@ -4,7 +4,6 @@
     @author Christophe Ferru
     @version 1.0 - 14 Avril 2021                           
 **/
-#include <Arduino.h>
 #include "Ecran.h"
 
 /**

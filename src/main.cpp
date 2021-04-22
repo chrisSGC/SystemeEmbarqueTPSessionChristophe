@@ -3,13 +3,14 @@
     Expérimentations sur l'utilisation des classes et d'un écran Oled (avec un bouton) sur un ESP32
     @file main.cpp
     @author Christophe Ferru
-    @version 0.2 19 Avril 2021
+    @version 0.4 21 Avril 2021
     
     Historique des versions       :
       Versions  Date          Auteur      Description
       0.1       12 Avril 21   Chris       Mise en place des fichiers de base
 	  0.2		19 Avril 21   Chris		  Reinitialisation du fichier main
       0.3       20 Avril 21   Chris       Mise en place de l'algorythme principal
+      0.4       21 Avril 21   Chris       Mise en place de l'anneau de Dels
                             
     platform                      : espressif32
     board                         : esp32doit-devkit-v1
