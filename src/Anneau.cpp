@@ -1,5 +1,4 @@
 #include <Anneau.h>
-///// A SUPPRIMER: METHODE POUR RETOURNER LE REGISTRE
 
 /**
  * Méthode qui permet:
@@ -33,9 +32,7 @@ void Anneau::EteindreDel(){
  * Méthode qui permet d'allumer des Del pour lesquelles une couleur a été définie
  * */
 void Anneau::AllumerDel(){
-    Serial.print("show de tes morts");
     pixels.show(); // Envoi la couleur définie à l'anneau
-    Serial.print("fuck off");
 }
 
 /**
@@ -59,29 +56,16 @@ void Anneau::TraiterRegistre(int delAAllumer, int rouge, int vert, int bleu){
  * Enfin, on allume les Del qui doivent l'être
  * */
 void Anneau::AllumerDelRegistre(int rouge, int vert, int bleu){
-    // Permet de définir la couleur du premier bloc de 2 Del
-    if( 0 != (registre & 0b11000000)){
-        pixels.setPixelColor(7, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(6, pixels.Color(rouge, vert, bleu));
-    }
+    EteindreDel();
 
-    // Permet de définir la couleur du second bloc de 2 Del
-    if( 0 != (registre & 0b00110000)){
-        pixels.setPixelColor(5, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(4, pixels.Color(rouge, vert, bleu));
-    }
-    
-    // Permet de définir la couleur du troisième bloc de 2 Del
-    if( 0 != (registre & 0b00001100)){
-        pixels.setPixelColor(3, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(2, pixels.Color(rouge, vert, bleu));
-    }
-
-    // Permet de définir la couleur du dernier bloc de 2 Del
-    if( 0 != (registre & 0b00000011)){
-        pixels.setPixelColor(1, pixels.Color(rouge, vert, bleu));
-        pixels.setPixelColor(0, pixels.Color(rouge, vert, bleu));
-    }
+    if( 0 != (registre & 0b10000000)){ pixels.setPixelColor(7, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b01000000)){ pixels.setPixelColor(6, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00100000)){ pixels.setPixelColor(5, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00010000)){ pixels.setPixelColor(4, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00001000)){ pixels.setPixelColor(3, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00000100)){ pixels.setPixelColor(2, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00000010)){ pixels.setPixelColor(1, pixels.Color(rouge, vert, bleu)); }
+    if( 0 != (registre & 0b00000001)){ pixels.setPixelColor(0, pixels.Color(rouge, vert, bleu)); }
 
     AllumerDel(); // On allume les Del pour lesquelles une couleur est définie
 }
@@ -105,9 +89,8 @@ void Anneau::FaireTournerAnneau(){
     pixels.setPixelColor(i, pixels.Color(0, 0, 25));
 
     AllumerDel();
-    Serial.print("vas chier");
-    delay(delais);
-    Serial.print("delay de mort");
+    delay(1);
     EteindreDel();
   }
+    EteindreDel();
 }
