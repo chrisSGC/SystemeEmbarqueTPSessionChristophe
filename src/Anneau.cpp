@@ -1,3 +1,9 @@
+/**
+    Classe qui permet de gérer l'anneau DEL du projet
+    @file ecran.cpp
+    @author Christophe Ferru
+    @version 1.0 - 14 Avril 2021                           
+**/
 #include <Anneau.h>
 
 /**
@@ -43,6 +49,10 @@ void Anneau::TraiterRegistre(int delAAllumer){
     
 }
 
+/**
+ * Permet d'allumer les dels jaunes en fonction du nombre de caracteres passé en parametre
+ * 
+ * */
 void Anneau::AllumerDelSaisie(int nombreCaracteres){
     if(nombreCaracteres == 1){ AllumerDelRegistre(0b11000000, 25, 25, 0); }
     else if(nombreCaracteres == 2){ AllumerDelRegistre(0b11110000, 25, 25, 0); }
@@ -56,8 +66,8 @@ void Anneau::AllumerDelSaisie(int nombreCaracteres){
  * On a découpé en 4 blocs nos Dels afin de signifier visuellement à l'utilisateur le nombre de chiffres entrés dans son code
  * 
  * La procédure est simple:
- * Chaque condition correspond à un bloc.
- * On vérifie donc le registre pour chacun des blocs. Si il y a concordance, on pose la couleur sur jaune.
+ * Chaque condition correspond à une Del.
+ * On vérifie donc le registre pour chacune des Del. Si il y a concordance, on pose la couleur sur jaune.
  * 
  * Enfin, on allume les Del qui doivent l'être
  * */

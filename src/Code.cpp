@@ -1,3 +1,9 @@
+/**
+    Classe qui permet de gérer le code PIN et sa modification
+    @file ecran.cpp
+    @author Christophe Ferru
+    @version 1.0 - 14 Avril 2021                           
+**/
 #include <Code.h>
 #include <iostream>
 #include <cstring>
@@ -9,7 +15,7 @@ using namespace std;
 * Permet d'initialiser le mot de passe de base
 **/
 Code::Code(){
-    code = "8934";
+    code = "8934"; // code de base au lancement de l'application
     ReinitialiserSaisie();
 }
 

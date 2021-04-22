@@ -100,14 +100,15 @@ void loop() {
         ecranDel->AfficherSaisie(code->nombreCaracteres);
         anneauDel->AllumerDelSaisie(code->nombreCaracteres);
     }else{
+        // Cas par défaut, on eteind des Del et on affiche le cas par defaut
         anneauDel->EteindreDel();
         anneauDel->AllumerDel();
         ecranDel->AfficherSaisie(code->nombreCaracteres);
     }
 
     if((2 != leCode) && (4 != leCode)){
-        code->ReinitialiserSaisie();
+        code->ReinitialiserSaisie(); // On réinitialise la saisie
         delay(4000);
-        leCode = 4;
+        leCode = 4; // On réinitialise le code de déajout des commentairespart à 4
     }
 }
