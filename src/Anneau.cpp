@@ -38,10 +38,16 @@ void Anneau::AllumerDel(){
 /**
  * On défini la couleur de toutes les Del sur "off"
  * */
-void Anneau::TraiterRegistre(int delAAllumer, int rouge, int vert, int bleu){
+void Anneau::TraiterRegistre(int delAAllumer){
     registre = registre | delAAllumer;
     
-    AllumerDelRegistre(rouge, vert, bleu);
+}
+
+void Anneau::AllumerDelSaisie(int nombreCaracteres){
+    if(nombreCaracteres == 1){ AllumerDelRegistre(0b11000000, 25, 25, 0); }
+    else if(nombreCaracteres == 2){ AllumerDelRegistre(0b11110000, 25, 25, 0); }
+    else if(nombreCaracteres == 3){ AllumerDelRegistre(0b11111100, 25, 25, 0); }
+    else if(nombreCaracteres == 4){ AllumerDelRegistre(0b11111111, 25, 25, 0); }
 }
 
 /**
@@ -55,7 +61,8 @@ void Anneau::TraiterRegistre(int delAAllumer, int rouge, int vert, int bleu){
  * 
  * Enfin, on allume les Del qui doivent l'être
  * */
-void Anneau::AllumerDelRegistre(int rouge, int vert, int bleu){
+void Anneau::AllumerDelRegistre(int delAAllumer,int rouge, int vert, int bleu){
+    TraiterRegistre(delAAllumer);
     EteindreDel();
 
     if( 0 != (registre & 0b10000000)){ pixels.setPixelColor(7, pixels.Color(rouge, vert, bleu)); }

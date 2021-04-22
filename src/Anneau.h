@@ -14,8 +14,9 @@ class Anneau{
         void EteindreDel();
         void AllumerDel();
         void FaireTournerAnneau();
-        void TraiterRegistre(int delAAllumer, int rouge, int vert, int bleu);
-        void AllumerDelRegistre(int rouge, int vert, int bleu);
+        void TraiterRegistre(int delAAllumer);
+        void AllumerDelRegistre(int delAAllumer,int rouge, int vert, int bleu);
+        void AllumerDelSaisie(int nombreCaracteres);
         void ReinitialiserRegistre();
         int GetRegistre();
 
