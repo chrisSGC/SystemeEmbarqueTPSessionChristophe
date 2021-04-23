@@ -16,6 +16,7 @@ using namespace std;
 **/
 Code::Code(){
     code = "8934"; // code de base au lancement de l'application
+    mode = 1; // le mode par défaut est 1 à savoir: mode classique
     ReinitialiserSaisie();
 }
 
@@ -23,13 +24,23 @@ Code::Code(){
  * Permet de réinitialiser la chiane saisie afin que l'utilisateur puisse reprendre à 0
  **/
 int Code::EntrerCaractere(char nouveauCaractere){
-    if('#' == nouveauCaractere){
+    if(('#' == nouveauCaractere) && (4 == chaineSaisie.size())){
         // il s'agit d'une validation de code, on lance donc la reconnaissance
         return VerifierCode();
-    }else if(('*' == nouveauCaractere) && (4 == chaineSaisie.size())){
+    }else if(('*' == nouveauCaractere) && (4 == chaineSaisie.size()) && (2 == mode)){
         //Si 4 caracteres plus le # = changement de code
         ModifierCode();
         return 3; // code 3 veut dire que le code a été modifié
+    }else if(('B' == nouveauCaractere) && (4 == chaineSaisie.size())){ //Si 4 caracteres plus le B, on vérifie si le code est bon et si tel est le cas, on entre en mode edition, ce qui veut dire que l'on va faire appel à la methode ReinitialiserSaisie et retourner un code 5.
+        // Si le code entré n'est pas bon, on renvoi un code 0
+        if(VerifierCode()){
+            ReinitialiserSaisie();
+            mode = 2;
+
+            return 5; // code 5 veut dire que la personne entre en mode edition
+        }else{
+            return 0;
+        }        
     }else{
         chaineSaisie = chaineSaisie + nouveauCaractere;
         nombreCaracteres++;
@@ -44,6 +55,7 @@ int Code::EntrerCaractere(char nouveauCaractere){
 void Code::ReinitialiserSaisie(){
     chaineSaisie = "";
     nombreCaracteres = 0;
+    mode = 1; // On remet le mode à 1 au cas ou il ai été changé
 }
 
 /**
