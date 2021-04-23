@@ -55,7 +55,7 @@ Clavier *clavier = NULL;
 Code *code = NULL;
 
 // Variables necesaires au programme
-int leCode;
+int leCode; // correspond au code de l'application afin qu'elle sache quoi faire
 
 void setup() {
     code = new Code(); // Initialisation de l'objet Code pour gérer le code PIN
@@ -63,16 +63,15 @@ void setup() {
     anneauDel = new Anneau(); // Initialisation de l'objet Anneau
     ecranDel = new Ecran(); // Initialisation de l'objet Ecran
 
-    Serial.begin(9600);
-    leCode = 4;
+    leCode = 4; // definition du code sur 4
 
     anneauDel->Initialiser(); // Appel de la methode initialiser qui permet de demarrer l'anneau et réinitiliser le registre
     ecranDel->lancement(); // Appel de la methode lancement qui permet d'initialiser l'affichage sur l'écran
 }
 
 void loop() {
-    ecranDel->EffacerEcran();
-    anneauDel->ReinitialiserRegistre();
+    ecranDel->EffacerEcran(); // On efface le contenu de l'écran
+    anneauDel->ReinitialiserRegistre(); // On remet le registre de  nos Del à 0
 
     char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
 
@@ -80,24 +79,24 @@ void loop() {
     if(toucheSaisie != NO_KEY){
         // On affiche la ligne de l'écran
         leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
-        Serial.println(toucheSaisie);
         anneauDel->FaireTournerAnneau();
     }
 
     if(1 == leCode){
+        // le code est bon, leds vertes + affichage du message d'ouverture
         anneauDel->AllumerDelRegistre(0b11111111, 0, 25, 0);
-        // le code est bon, leds vertes
         ecranDel->AfficherDeverrouillage(true);
     }else if(0 == leCode){
+        // code erroné, leds rouges + affichage du message d'accès refusé
         anneauDel->AllumerDelRegistre(0b11111111, 25, 0, 0);
-        // code erroné, leds rouges
         ecranDel->AfficherDeverrouillage(false);
     }else if(3 == leCode){
+        // Code modifié, leds violettes + affichage du message de redemarrage du systeme
         anneauDel->AllumerDelRegistre(0b11111111, 25, 0, 13);
-        // Code modifié, leds violettes
         ecranDel->AfficherModification();
     }else if(2 == leCode){
-        ecranDel->AfficherSaisie(code->nombreCaracteres);
+        // Mode classique ou édition, cela est défini par le mode de l'objet code, on attend la saisie d'autres caracteres par l'utilisateur
+        ecranDel->AfficherSaisie(code->nombreCaracteres, code->mode);
         anneauDel->AllumerDelSaisie(code->nombreCaracteres);
     }else{
         // Cas par défaut, on eteind des Del et on affiche le cas par defaut
