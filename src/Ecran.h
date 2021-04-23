@@ -29,9 +29,8 @@ class Ecran{
         Adafruit_SSD1306 afficheur = Adafruit_SSD1306(128, 32, &Wire);
 
         Ecran(){}
-        //Ecran(TwoWire *twi, uint8_t RST = 4, uint8_t rawHeight = 32, uint8_t rawWidth = 128){ };
         void InitialiserAffichage(int hauteur);
-        void AfficherSaisie(byte nombreCaracteres = 0);
+        void AfficherSaisie(byte nombreCaracteres = 0, int leMode = 1);
         void AfficherDeverrouillage(bool ouverture = false);
         void AfficherModification();
 
@@ -39,5 +38,8 @@ class Ecran{
         void EffacerEcran();
         
     private:  
+    // Attributs privés représentants les en tetes
         String enTete = "Saisissez votre code";
+        String enTeteModification = "Nouveau Code";
+        String modeEdition = "MODE EDITION";
 };

@@ -65,7 +65,7 @@ void Ecran::AfficherModification(){
  * @param nbrCharSaisis nombre de caractères saisis par l'utilisateur afin d'afficher le bon nombe d'étoiles
  * @return void 
  **/
-void Ecran::AfficherSaisie(byte nbrCharSaisis){
+void Ecran::AfficherSaisie(byte nbrCharSaisis, int leMode){
     EffacerEcran();
     InitialiserAffichage(10);
     byte nbrLocal = 0;
@@ -76,7 +76,15 @@ void Ecran::AfficherSaisie(byte nbrCharSaisis){
         nbrLocal++;
     }
 
-    afficheur.println(enTete);
+    if(2 == leMode){
+        InitialiserAffichage(1);
+        afficheur.println(modeEdition);
+        afficheur.println(enTeteModification);
+    }else{
+        InitialiserAffichage(10);
+        afficheur.println(enTete);
+    }
+
     afficheur.println(affichageCode);
     afficheur.display();
 }
