@@ -15,6 +15,9 @@
     Autres librairies
         Adafruit_NeoPixel
 **/
+#ifndef ANNEAU_H
+#define ANNEAU_H
+
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
   #include <avr/power.h>
@@ -43,3 +46,5 @@ class Anneau{
         int delais = 5; // Time (in milliseconds) to pause between pixels
         int registre = 0xff; // abcd efgh a: premier Del, b: second del, c: troisieme del, d: quatrieme del, e: cinquième del, f: sixième Del, g: septième Del, h: huitième Del 
 };
+
+#endif

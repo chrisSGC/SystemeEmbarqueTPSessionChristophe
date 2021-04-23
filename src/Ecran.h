@@ -17,6 +17,9 @@
         Adafruit_SSD1306
         Adafruit_I2CDevice
 **/
+#ifndef ECRAN_H
+#define ECRAN_H
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -38,8 +41,10 @@ class Ecran{
         void EffacerEcran();
         
     private:  
-    // Attributs privés représentants les en tetes
+        // Attributs privés représentants les en tetes
         String enTete = "Saisissez votre code";
         String enTeteModification = "Nouveau Code";
         String modeEdition = "MODE EDITION";
 };
+
+#endif

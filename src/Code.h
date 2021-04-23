@@ -15,6 +15,10 @@
     Autres librairies
         Aucune
 **/
+
+#ifndef CODE_H
+#define CODE_H
+
 #include <iostream>
 using namespace std;
 
@@ -36,3 +40,5 @@ class Code{
         string code; // Code permettant l'ouverture de la porte
         string chaineSaisie; // Chaine représentant les touches saisies par l'utilisateur
 };
+
+#endif
