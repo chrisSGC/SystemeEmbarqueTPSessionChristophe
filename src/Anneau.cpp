@@ -16,10 +16,6 @@ void Anneau::Initialiser(){
     ReinitialiserRegistre();
 }
 
-int Anneau::GetRegistre(){
-    return registre;
-}
-
 /**
  * Méthode qui remet le registre à 0
  * */
@@ -46,7 +42,6 @@ void Anneau::AllumerDel(){
  * */
 void Anneau::TraiterRegistre(int delAAllumer){
     registre = registre | delAAllumer;
-    
 }
 
 /**
@@ -109,5 +104,4 @@ void Anneau::FaireTournerAnneau(){
     delay(1);
     EteindreDel();
   }
-    EteindreDel();
 }

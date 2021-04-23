@@ -15,22 +15,30 @@
     Autres librairies
         Aucune
 **/
+
+#ifndef CODE_H
+#define CODE_H
+
 #include <iostream>
 using namespace std;
 
 class Code{
     public:
-        // Propriété correspondant au nombre de caracteres saisis
-        int nombreCaracteres;
+        // Propriétés publiques
+        int nombreCaracteres; // nombre de caractères saisis par l'utilisateur dans l'essai actuel
+        int mode; // Mode dans lequel se trouve la saisie du code. PErmettant de savoir si on est en mode ouverture ou edition
 
-        // Méthode spubliques de la classe
-        Code();
-        bool VerifierCode();
-        int EntrerCaractere(char nouveauCaractere);
-        void ReinitialiserSaisie();
-        void ModifierCode();
+        // Méthodes publiques de la classe
+        Code(); // Constructeur de la classe
+        bool VerifierCode(); // Methode permettant de vérifier le code entré
+        int EntrerCaractere(char nouveauCaractere); // Methode permettant d'ajouter un caractere à la chaine saisie
+        void ReinitialiserSaisie(); // Methode qui réinitialise le code, nombreCaracteres et mode
+        void ModifierCode(); // Methode qui permet de modifier le code
     
     private:
-        string code;
-        string chaineSaisie;
+        // attributs privés
+        string code; // Code permettant l'ouverture de la porte
+        string chaineSaisie; // Chaine représentant les touches saisies par l'utilisateur
 };
+
+#endif
