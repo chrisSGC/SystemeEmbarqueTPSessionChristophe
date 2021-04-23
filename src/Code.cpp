@@ -38,7 +38,7 @@ int Code::EntrerCaractere(char nouveauCaractere){
             // La maniere dont a été codée et pensée ReinitialiserSaisie() implique de devoir remodifier le mode juste après
             mode = 2; // On place le mode de l'application à 2
 
-            return 5; // code 5 veut dire que la personne entre en mode edition
+            return 2; // code 5 veut dire que la personne entre en mode edition
         }else{
             return 0; // code 0 veut dire que le mot de passe est éronné
         }        
