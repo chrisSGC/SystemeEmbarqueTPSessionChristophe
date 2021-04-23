@@ -42,7 +42,6 @@ void Anneau::AllumerDel(){
  * */
 void Anneau::TraiterRegistre(int delAAllumer){
     registre = registre | delAAllumer;
-    
 }
 
 /**
@@ -105,5 +104,4 @@ void Anneau::FaireTournerAnneau(){
     delay(1);
     EteindreDel();
   }
-    EteindreDel();
 }
