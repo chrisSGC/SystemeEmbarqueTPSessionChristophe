@@ -34,16 +34,17 @@ int Code::EntrerCaractere(char nouveauCaractere){
     }else if(('B' == nouveauCaractere) && (4 == chaineSaisie.size())){ //Si 4 caracteres plus le B, on vérifie si le code est bon et si tel est le cas, on entre en mode edition, ce qui veut dire que l'on va faire appel à la methode ReinitialiserSaisie et retourner un code 5.
         // Si le code entré n'est pas bon, on renvoi un code 0
         if(VerifierCode()){
-            ReinitialiserSaisie();
-            mode = 2;
+            ReinitialiserSaisie(); // On appelle la methode reinitialiser afin de permettre la remise à 0 de la chaine et du nombre de caracteres
+            // La maniere dont a été codée et pensée ReinitialiserSaisie() implique de devoir remodifier le mode juste après
+            mode = 2; // On place le mode de l'application à 2
 
             return 5; // code 5 veut dire que la personne entre en mode edition
         }else{
-            return 0;
+            return 0; // code 0 veut dire que le mot de passe est éronné
         }        
-    }else{
-        chaineSaisie = chaineSaisie + nouveauCaractere;
-        nombreCaracteres++;
+    }else{ // Il ne s'agit d'aucun des caracteres reservés donc un ajout simple
+        chaineSaisie = chaineSaisie + nouveauCaractere; // On ajoute le nouveau caractere à la liste
+        nombreCaracteres++; // +1 aux caractères
         return 2; // code 2 veut dire que le caractere a été ajouté
     }
 
