@@ -16,10 +16,6 @@ void Anneau::Initialiser(){
     ReinitialiserRegistre();
 }
 
-int Anneau::GetRegistre(){
-    return registre;
-}
-
 /**
  * Méthode qui remet le registre à 0
  * */

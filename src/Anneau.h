@@ -37,7 +37,6 @@ class Anneau{
         void AllumerDelRegistre(int delAAllumer,int rouge, int vert, int bleu);
         void AllumerDelSaisie(int nombreCaracteres);
         void ReinitialiserRegistre();
-        int GetRegistre();
 
     private:
         int nbrPixels = 8; // NeoPixel ring size
