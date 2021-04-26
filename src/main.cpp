@@ -1,6 +1,8 @@
 /**
     Projet de session Systèmes embarqués
-    Expérimentations sur l'utilisation des classes et d'un écran Oled (avec un bouton) sur un ESP32
+    
+    Utilisation d'un écran Del, un anneau Del, un clavier matrix 4x4 et un ESP 32 pour réaliser un système d'ouverture de porte
+
     @file main.cpp
     @author Christophe Ferru
     @version 2.1 26 Avril 2021
@@ -87,7 +89,7 @@ void loop() {
     // Partie non prévue au programme mais necessaire pour vérifier que le tout fonctionne
     if(toucheSaisie != NO_KEY){
         // On affiche la ligne de l'écran
-        leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code
+        leCode = code->EntrerCaractere(toucheSaisie); // Fait appel à la methode pour ajouter le caractére saisi à la chaine et retourne le code de validation de ce dernier
         anneauDel->FaireTournerAnneau();
     }
 
