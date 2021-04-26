@@ -3,7 +3,7 @@
     Expérimentations sur l'utilisation des classes et d'un écran Oled (avec un bouton) sur un ESP32
     @file main.cpp
     @author Christophe Ferru
-    @version 2.0 23 Avril 2021
+    @version 2.1 26 Avril 2021
     
     Historique des versions       :
       Versions  Date          Auteur      Description
@@ -13,6 +13,7 @@
       0.4       21 Avril 21   Chris       Mise en place de l'anneau de Dels
       1.0       23 Avril 21   Chris       Premier version stable
       2.0       23 Avril 21   Chris       Sécurisation du changement de code pin
+      2.1       26 Avril 21   Chris       Changement d epalce et suppression d'espaces inutiles
                             
     platform                      : espressif32
     board                         : esp32doit-devkit-v1
@@ -75,6 +76,12 @@ void loop() {
     ecranDel->EffacerEcran(); // On efface le contenu de l'écran
     anneauDel->ReinitialiserRegistre(); // On remet le registre de  nos Del à 0
 
+    if((2 != leCode) && (4 != leCode)){
+        code->ReinitialiserSaisie(); // On réinitialise la saisie
+        delay(4000);
+        leCode = 4; // On réinitialise le code de déajout des commentairespart à 4
+    }
+
     char toucheSaisie = clavier->RecupererToucheTapee(); // récupere la touche saisie sur le clavier
 
     // Partie non prévue au programme mais necessaire pour vérifier que le tout fonctionne
@@ -105,11 +112,5 @@ void loop() {
         anneauDel->EteindreDel();
         anneauDel->AllumerDel();
         ecranDel->AfficherSaisie(code->nombreCaracteres);
-    }
-
-    if((2 != leCode) && (4 != leCode)){
-        code->ReinitialiserSaisie(); // On réinitialise la saisie
-        delay(4000);
-        leCode = 4; // On réinitialise le code de déajout des commentairespart à 4
     }
 }
